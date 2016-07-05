@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Tank_Script : MonoBehaviour {
 
-	public Vector3 targetPos;
+	public Vector3 targetPos, heighestPoint;
 	public GameObject target;
 	public GameObject projectileTemplate;
 
@@ -12,15 +12,22 @@ public class Tank_Script : MonoBehaviour {
 	//y = mx^2 + c
 	// Use this for initialization
 	void Start () {
-		targetPos = target.transform.position;
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		transform.LookAt (targetPos);
+		targetPos = new Vector3(1.0f, (2*a*1.0f) + b, 0);
+//		heighestPoint = 
+		if (target != null){
+			transform.LookAt (targetPos);
+		}
+
 		if (Input.GetKeyDown(KeyCode.Space)){
 			FireProjectile ();
 		}
+
+		// f'(x) = 2ax + b 
 	}
 
 	private void FireProjectile(){
@@ -29,5 +36,7 @@ public class Tank_Script : MonoBehaviour {
 		p.a = a;
 		p.b = b;
 		p.c = c;
+		target = projectile;
+		targetPos = projectile.transform.position;
 	}
 }
