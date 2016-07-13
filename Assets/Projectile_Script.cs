@@ -3,9 +3,11 @@ using System.Collections;
 
 public class Projectile_Script : MonoBehaviour {
 	public float a, b, c, t;
+	public GameObject tank;
 	// Use this for initialization
 	void Start () {
 		t = 0;
+		tank = GameObject.FindGameObjectWithTag ("tank");
 	}
 	
 	// Update is called once per frame
@@ -16,5 +18,18 @@ public class Projectile_Script : MonoBehaviour {
 
 	public void FireAtWill (float a, float b, float c, float t){
 		transform.position = new Vector3 (t, (a*Mathf.Pow(t,2)) + (b*t) + c, 0);
+	}
+
+	void OnTriggerEnter(Collider other){
+		if (other.gameObject.tag == "target") {
+			other.gameObject.SetActive (false);
+			Tank_Script tankscript = tank.GetComponent<Tank_Script> ();
+			tankscript.targetsRemaining--;
+		}
+
+		if (other.gameObject.tag == "boundry") {
+			Tank_Script tankscript = tank.GetComponent<Tank_Script> ();
+			tankscript.canFire = true;
+		}
 	}
 }
