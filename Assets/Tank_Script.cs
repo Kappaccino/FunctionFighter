@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Tank_Script : MonoBehaviour {
 
@@ -9,6 +10,10 @@ public class Tank_Script : MonoBehaviour {
 	public GameObject[] targets;
 	public GameObject projectileTemplate;
 	public int fails;
+
+	public Text eq1, eq2, eq3;
+	public Button fire;
+	public Text title;
 
 	public Text hints;
 	private string hint1, hint2, hint3;
@@ -19,6 +24,10 @@ public class Tank_Script : MonoBehaviour {
 	public InputField input_A, input_B, input_C;
 	public float a, b, c;
 
+	public Text winAnnounce;
+	public Button nextLevel;
+	public Button quit;
+
 	//y = mx^2 + c
 	// Use this for initialization
 	void Start () {
@@ -26,9 +35,13 @@ public class Tank_Script : MonoBehaviour {
 		canFire = true;
 		targets = GameObject.FindGameObjectsWithTag ("target");
 		targetsRemaining = targets.Length;
-		hint1 = "This function is in standard form. In this form, changing the lowering the a variable will make the parabola steeper, and the projectile will not go as far.";
-		hint2 = "In standard form, changing the b variable will affect the angle of the projectile";
-		hint3 = "The correct equation for this problem is y=-0.3x^2+3x+0";
+		hint1 = "This function is in standard form. In this form, changing the lowering the a variable will make the parabola steeper, and the projectile will not go as far.\n";
+		hint2 = "In standard form, changing the b variable will affect the angle of the projectile\n";
+		hint3 = "The correct equation for this problem is y=-0.3x^2+3x+0\n";
+
+		winAnnounce.gameObject.SetActive (false);
+		nextLevel.gameObject.SetActive (false);
+		quit.gameObject.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -61,7 +74,7 @@ public class Tank_Script : MonoBehaviour {
 			a = -(float.Parse (input_A.text));
 			Debug.Log (a);
 			b = float.Parse (input_B.text);
-			c = float.Parse (input_C.text);
+			c = 0;
 			GameObject projectile = Instantiate (projectileTemplate, transform.position, Quaternion.identity) as GameObject;
 			Projectile_Script p = projectile.GetComponent<Projectile_Script> ();
 			p.a = a;
@@ -73,5 +86,29 @@ public class Tank_Script : MonoBehaviour {
 		} else {
 
 		}
+	}
+
+	public void Win(){
+		eq1.gameObject.SetActive (false);
+		eq2.gameObject.SetActive (false);
+		eq3.gameObject.SetActive (false);
+		fire.gameObject.SetActive (false);
+		hints.gameObject.SetActive (false);
+		input_A.gameObject.SetActive (false);
+		input_B.gameObject.SetActive (false);
+		//input_C.gameObject.SetActive (false);
+		title.gameObject.SetActive (false);
+
+		winAnnounce.gameObject.SetActive (true);
+		nextLevel.gameObject.SetActive (true);
+		quit.gameObject.SetActive (true);
+	}
+
+	public void Quit (){
+		Application.Quit();
+	}
+
+	public void LoadScene (){
+		SceneManager.LoadScene (0, LoadSceneMode.Single);
 	}
 }
