@@ -4,6 +4,7 @@ using System.Collections;
 public class Projectile_Script : MonoBehaviour {
 	public float a, b, c, t;
 	public GameObject tank;
+
 	// Use this for initialization
 	void Start () {
 		t = 0;
@@ -17,7 +18,11 @@ public class Projectile_Script : MonoBehaviour {
 	}
 
 	public void FireAtWill (float a, float b, float c, float t){
-		transform.position = new Vector3 (t, (a*Mathf.Pow(t,2)) + (b*t) + c, 0);
+		//Tank_Script tankscript = tank.GetComponent<Tank_Script> ();
+
+		//if (tankscript.selected_Struct = eqstruct_Standard) {
+			transform.position = new Vector3 (t, (a * Mathf.Pow (t, 2)) + (b * t) + c, 0);
+		//}
 	}
 
 	void OnTriggerEnter(Collider other){

@@ -14,7 +14,10 @@ public class Tank_Script : MonoBehaviour {
 	public GameObject eqstruct_Standard;
 	public GameObject eqstruct_Intercept;
 	public GameObject eqstruct_Vertex;
-	public GameObject selected_Struct;
+	public enum EquationStruct
+	{
+		Standard, Intercept, Vertex, None
+	};
 
 	public GameObject formatSelection;
 
@@ -35,9 +38,12 @@ public class Tank_Script : MonoBehaviour {
 	public Button nextLevel;
 	public Button quit;
 
+	public EquationStruct selectedStruct;
+
 	//y = mx^2 + c
 	// Use this for initialization
 	void Start () {
+		selectedStruct = EquationStruct.None;
 		fails = 0;
 		canFire = true;
 		targets = GameObject.FindGameObjectsWithTag ("target");
@@ -64,6 +70,8 @@ public class Tank_Script : MonoBehaviour {
 //		}
 
 		// f'(x) = 2ax + b 
+
+		Debug.Log (selectedStruct);
 	}
 
 	public void FireProjectile(){
@@ -98,9 +106,15 @@ public class Tank_Script : MonoBehaviour {
 		winAnnounce.gameObject.SetActive (true);
 		nextLevel.gameObject.SetActive (true);
 		quit.gameObject.SetActive (true);
+
+		selectedStruct = EquationStruct.None;
 	}
 
 	public void Fail(){
+		foreach (GameObject cannontarget in targets) {
+			cannontarget.gameObject.SetActive (true);
+		}
+
 		if (fails == 0) {
 		} else if (fails == 1) {
 			hints.text = hint1;
@@ -122,25 +136,31 @@ public class Tank_Script : MonoBehaviour {
 	public void CheckAValue(){
 		float input_a_value;
 		input_a_value = Mathf.Abs(float.Parse (input_A.text));
-		input_A.text = input_a_value.ToString();
+
+		if (input_a_value > 10) {
+			input_a_value = 10;
+			input_A.text = input_a_value.ToString ();
+		} else {
+			input_A.text = input_a_value.ToString ();
+		}
 	}
 
 	public void ChooseStandardForm(){
-		selected_Struct = eqstruct_Standard;
+		selectedStruct = EquationStruct.Standard;
 		Debug.Log ("Standard Form Selected");
 		formatSelection.gameObject.SetActive (false);
 		eqstruct_Standard.gameObject.SetActive (true);
 	}
 
 	public void ChooseInterceptForm(){
-		selected_Struct = eqstruct_Intercept;
+		selectedStruct = EquationStruct.Intercept;
 		Debug.Log ("Intercept Form Selected");
 		formatSelection.gameObject.SetActive (false);
 		eqstruct_Intercept.gameObject.SetActive (true);
 	}
 
 	public void ChooseVertexForm(){
-		selected_Struct = eqstruct_Vertex;
+		selectedStruct = EquationStruct.Vertex;
 		Debug.Log ("Vertex Form Selected");
 		formatSelection.gameObject.SetActive (false);
 		eqstruct_Vertex.gameObject.SetActive (true);
