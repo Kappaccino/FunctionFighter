@@ -34,6 +34,7 @@ public class Projectile_Script : MonoBehaviour {
 			} else {
 				tankscript.fails++;
 				tankscript.canFire = true;
+				tankscript.Fail ();
 			}
 		}
 	}

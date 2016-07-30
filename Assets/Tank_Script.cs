@@ -11,6 +11,13 @@ public class Tank_Script : MonoBehaviour {
 	public GameObject projectileTemplate;
 	public int fails;
 
+	public GameObject eqstruct_Standard;
+	public GameObject eqstruct_Intercept;
+	public GameObject eqstruct_Vertex;
+	public GameObject selected_Struct;
+
+	public GameObject formatSelection;
+
 	public Text eq1, eq2, eq3;
 	public Button fire;
 	public Text title;
@@ -52,19 +59,9 @@ public class Tank_Script : MonoBehaviour {
 			transform.LookAt (targetPos);
 		}
 
-		if (Input.GetKeyDown(KeyCode.Space)){
-				FireProjectile ();
-		}
-
-		if (fails == 0) {
-
-		} else if (fails == 1) {
-			hints.text = hint1;
-		} else if (fails == 2) {
-			hints.text = hint1 + hint2;
-		} else if (fails > 2) {
-			hints.text = hint1 + hint2 + hint3;
-		}
+//		if (Input.GetKeyDown(KeyCode.Space)){
+//				FireProjectile ();
+//		}
 
 		// f'(x) = 2ax + b 
 	}
@@ -72,7 +69,6 @@ public class Tank_Script : MonoBehaviour {
 	public void FireProjectile(){
 		if (canFire) {
 			a = -(float.Parse (input_A.text));
-			Debug.Log (a);
 			b = float.Parse (input_B.text);
 			c = 0;
 			GameObject projectile = Instantiate (projectileTemplate, transform.position, Quaternion.identity) as GameObject;
@@ -104,11 +100,49 @@ public class Tank_Script : MonoBehaviour {
 		quit.gameObject.SetActive (true);
 	}
 
+	public void Fail(){
+		if (fails == 0) {
+		} else if (fails == 1) {
+			hints.text = hint1;
+		} else if (fails == 2) {
+			hints.text = hint1 + hint2;
+		} else if (fails > 2) {
+			hints.text = hint1 + hint2 + hint3;
+		}
+	}
+
 	public void Quit (){
 		Application.Quit();
 	}
 
 	public void LoadScene (){
 		SceneManager.LoadScene (0, LoadSceneMode.Single);
+	}
+
+	public void CheckAValue(){
+		float input_a_value;
+		input_a_value = Mathf.Abs(float.Parse (input_A.text));
+		input_A.text = input_a_value.ToString();
+	}
+
+	public void ChooseStandardForm(){
+		selected_Struct = eqstruct_Standard;
+		Debug.Log ("Standard Form Selected");
+		formatSelection.gameObject.SetActive (false);
+		eqstruct_Standard.gameObject.SetActive (true);
+	}
+
+	public void ChooseInterceptForm(){
+		selected_Struct = eqstruct_Intercept;
+		Debug.Log ("Intercept Form Selected");
+		formatSelection.gameObject.SetActive (false);
+		eqstruct_Intercept.gameObject.SetActive (true);
+	}
+
+	public void ChooseVertexForm(){
+		selected_Struct = eqstruct_Vertex;
+		Debug.Log ("Vertex Form Selected");
+		formatSelection.gameObject.SetActive (false);
+		eqstruct_Vertex.gameObject.SetActive (true);
 	}
 }
