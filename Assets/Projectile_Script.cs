@@ -18,11 +18,17 @@ public class Projectile_Script : MonoBehaviour {
 	}
 
 	public void FireAtWill (float a, float b, float c, float t){
-		//Tank_Script tankscript = tank.GetComponent<Tank_Script> ();
+		Tank_Script tankscript = tank.GetComponent<Tank_Script> ();
 
-		//if (tankscript.selected_Struct = eqstruct_Standard) {
+		if (tankscript.selectedStruct == Tank_Script.EquationStruct.Standard) {
 			transform.position = new Vector3 (t, (a * Mathf.Pow (t, 2)) + (b * t) + c, 0);
-		//}
+		} else if (tankscript.selectedStruct == Tank_Script.EquationStruct.Intercept) {
+			transform.position = new Vector3 (t, (a * (t + b) * (t - c)));
+		} else if (tankscript.selectedStruct == Tank_Script.EquationStruct.Vertex) {
+
+		} else if (tankscript.selectedStruct == Tank_Script.EquationStruct.None) {
+
+		}
 	}
 
 	void OnTriggerEnter(Collider other){

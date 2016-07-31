@@ -31,7 +31,9 @@ public class Tank_Script : MonoBehaviour {
 	public int targetsRemaining;
 	public bool canFire;
 
-	public InputField input_A, input_B, input_C;
+	public InputField structStand_input_A, structStand_input_B, structStand_input_C, 
+						structInter_input_A, structInter_input_B, structInter_input_C,
+						structVert_input_A, structVert_input_B, structVert_input_C;
 	public float a, b, c;
 
 	public Text winAnnounce;
@@ -71,37 +73,63 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-		Debug.Log (selectedStruct);
+		//Debug.Log (selectedStruct);
 	}
 
 	public void FireProjectile(){
 		if (canFire) {
-			a = -(float.Parse (input_A.text));
-			b = float.Parse (input_B.text);
-			c = 0;
-			GameObject projectile = Instantiate (projectileTemplate, transform.position, Quaternion.identity) as GameObject;
-			Projectile_Script p = projectile.GetComponent<Projectile_Script> ();
-			p.a = a;
-			p.b = b;
-			p.c = c;
-			target = projectile;
-			targetPos = projectile.transform.position;
-			canFire = false;
-		} else {
+			if (selectedStruct == EquationStruct.Standard) {
+				a = -(float.Parse (structStand_input_A.text));
+				b = float.Parse (structStand_input_B.text);
+				c = 0;
+				GameObject projectile = Instantiate (projectileTemplate, transform.position, Quaternion.identity) as GameObject;
+				Projectile_Script p = projectile.GetComponent<Projectile_Script> ();
+				p.a = a;
+				p.b = b;
+				p.c = c;
+				target = projectile;
+				targetPos = projectile.transform.position;
+				canFire = false;
+			} else if (selectedStruct == EquationStruct.Intercept) {
+				a = -(float.Parse (structInter_input_A.text));
+				b = 0;
+				c = float.Parse (structInter_input_C.text);
+				GameObject projectile = Instantiate (projectileTemplate, transform.position, Quaternion.identity) as GameObject;
+				Projectile_Script p = projectile.GetComponent<Projectile_Script> ();
+				p.a = a;
+				p.b = b;
+				p.c = c;
+				target = projectile;
+				targetPos = projectile.transform.position;
+				canFire = false;
+			} else if (selectedStruct == EquationStruct.Vertex) {
 
+
+			} else if (selectedStruct == EquationStruct.None) {
+
+
+			}
 		}
 	}
 
 	public void Win(){
-		eq1.gameObject.SetActive (false);
-		eq2.gameObject.SetActive (false);
-		eq3.gameObject.SetActive (false);
-		fire.gameObject.SetActive (false);
-		hints.gameObject.SetActive (false);
-		input_A.gameObject.SetActive (false);
-		input_B.gameObject.SetActive (false);
-		//input_C.gameObject.SetActive (false);
-		title.gameObject.SetActive (false);
+
+		GameObject[] UIpieces;
+		UIpieces = GameObject.FindGameObjectsWithTag ("InGameUI");
+		foreach (GameObject InGameUI in UIpieces) {
+			InGameUI.SetActive (false);
+		}
+
+
+//		eq1.gameObject.SetActive (false);
+//		eq2.gameObject.SetActive (false);
+//		eq3.gameObject.SetActive (false);
+//		fire.gameObject.SetActive (false);
+//		hints.gameObject.SetActive (false);
+//		input_A.gameObject.SetActive (false);
+//		input_B.gameObject.SetActive (false);
+//		//input_C.gameObject.SetActive (false);
+//		title.gameObject.SetActive (false);
 
 		winAnnounce.gameObject.SetActive (true);
 		nextLevel.gameObject.SetActive (true);
@@ -134,15 +162,97 @@ public class Tank_Script : MonoBehaviour {
 	}
 
 	public void CheckAValue(){
-		float input_a_value;
-		input_a_value = Mathf.Abs(float.Parse (input_A.text));
+		if (selectedStruct == EquationStruct.Standard) {
+			float input_a_value;
+			input_a_value = Mathf.Abs (float.Parse (structStand_input_A.text));
 
-		if (input_a_value > 10) {
-			input_a_value = 10;
-			input_A.text = input_a_value.ToString ();
-		} else {
-			input_A.text = input_a_value.ToString ();
+			if (input_a_value > 10) {
+				input_a_value = 10;
+				structStand_input_A.text = input_a_value.ToString ();
+			} else {
+				structStand_input_A.text = input_a_value.ToString ();
+			}
+
+			float input_b_value;
+			input_b_value = Mathf.Abs (float.Parse (structStand_input_B.text));
+
+			if (input_b_value > 10) {
+				input_b_value = 10;
+				structStand_input_B.text = input_b_value.ToString ();
+			} else {
+				structStand_input_B.text = input_b_value.ToString ();
+			}
+
+		} else if (selectedStruct == EquationStruct.Intercept) {
+			Debug.Log ("Checking A value (intercept form)");
+			float input_a_value;
+			input_a_value = Mathf.Abs (float.Parse (structInter_input_A.text));
+
+			if (input_a_value > 10) {
+				input_a_value = 10;
+				structInter_input_A.text = input_a_value.ToString ();
+			} else {
+				structInter_input_A.text = input_a_value.ToString ();
+			}
+
+//			float input_b_value;
+//			input_b_value = Mathf.Abs (float.Parse (structInter_input_B.text));
+//
+//			if (input_b_value > 10) {
+//				input_b_value = 10;
+//				structInter_input_B.text = input_b_value.ToString ();
+//			} else {
+//				structInter_input_A.text = input_b_value.ToString ();
+//			}
+
+			float input_c_value;
+			input_c_value = Mathf.Abs (float.Parse (structInter_input_C.text));
+
+			if (input_c_value > 10) {
+				input_c_value = 10;
+				structInter_input_C.text = input_c_value.ToString ();
+			} else {
+				structInter_input_C.text = input_c_value.ToString ();
+			}
+
+		} else if (selectedStruct == EquationStruct.Vertex) {
+			Debug.Log ("Checking A value (vertex form)");
+			float input_a_value;
+			input_a_value = Mathf.Abs (float.Parse (structVert_input_A.text));
+
+			if (input_a_value > 10) {
+				input_a_value = 10;
+				structVert_input_A.text = input_a_value.ToString ();
+			} else {
+				structVert_input_A.text = input_a_value.ToString ();
+			}
+
+			float input_b_value;
+			input_b_value = Mathf.Abs (float.Parse (structVert_input_B.text));
+
+			if (input_b_value > 10) {
+				input_b_value = 10;
+				structVert_input_B.text = input_b_value.ToString ();
+			} else {
+				structVert_input_A.text = input_b_value.ToString ();
+			}
+
+			float input_c_value;
+			input_c_value = Mathf.Abs (float.Parse (structVert_input_C.text));
+
+			if (input_c_value > 10) {
+				input_c_value = 10;
+				structVert_input_C.text = input_c_value.ToString ();
+			} else {
+				structVert_input_C.text = input_c_value.ToString ();
+			}
+
+
+		} else if (selectedStruct == EquationStruct.None) {
+
+		
 		}
+
 	}
 
 	public void ChooseStandardForm(){
