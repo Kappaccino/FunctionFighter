@@ -38,11 +38,17 @@ public class Tank_Script : MonoBehaviour {
 	public float a, b, c;
 
 	public Text winAnnounce;
+	public GameObject standardFormHelp;
+	public GameObject interceptFormHelp;
 	public Button nextLevel;
 	public Button quit;
 	public GameObject structSelect;
+	public GameObject SelectionUI;
+	public GameObject[] EquationUI;
 
 	public EquationStruct selectedStruct;
+
+	public bool helpActive;
 
 	//y = mx^2 + c
 	// Use this for initialization
@@ -64,6 +70,7 @@ public class Tank_Script : MonoBehaviour {
 		winAnnounce.gameObject.SetActive (false);
 		nextLevel.gameObject.SetActive (false);
 		quit.gameObject.SetActive (false);
+		helpActive = false;
 
 	}
 	
@@ -82,7 +89,7 @@ public class Tank_Script : MonoBehaviour {
 		// f'(x) = 2ax + b 
 
 		//Debug.Log (selectedStruct);
-		Debug.Log(targetsRemaining);
+		Debug.Log(helpActive);
 	}
 
 	public void FireProjectile(){
@@ -291,6 +298,19 @@ public class Tank_Script : MonoBehaviour {
 
 	}
 
+	public void ChangeEquationStructure(){
+		equationUI = GameObject.FindGameObjectsWithTag ("Equation");
+		foreach (GameObject Equation in equationUI) {
+			Equation.SetActive (false);
+		}
+
+		selectedStruct = EquationStruct.None;
+
+		GameObject selectionUI;
+		selectionUI = GameObject.FindGameObjectWithTag ("StructSelect");
+		selectionUI.SetActive (true);
+	}
+
 	public void ChooseStandardForm(){
 		selectedStruct = EquationStruct.Standard;
 		Debug.Log ("Standard Form Selected");
@@ -310,5 +330,25 @@ public class Tank_Script : MonoBehaviour {
 		Debug.Log ("Vertex Form Selected");
 		formatSelection.gameObject.SetActive (false);
 		eqstruct_Vertex.gameObject.SetActive (true);
+	}
+
+	public void StandardFormHelp(){
+		if (!standardFormHelp.gameObject.active && helpActive == false) {
+			standardFormHelp.SetActive (true);
+			helpActive = true;
+		} else if(standardFormHelp.gameObject.active && helpActive == true){
+			standardFormHelp.SetActive (false);
+			helpActive = false;
+		}
+	}
+
+	public void InterceptFormHelp(){
+		if (!interceptFormHelp.gameObject.active && helpActive == false) {
+			interceptFormHelp.SetActive (true);
+			helpActive = true;
+		} else if(interceptFormHelp.gameObject.active && helpActive == true){
+			interceptFormHelp.SetActive (false);
+			helpActive = false;
+		}
 	}
 }
