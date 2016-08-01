@@ -13,7 +13,7 @@ public class Projectile_Script : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		t += Time.deltaTime;
+		t += 2*Time.deltaTime;
 		FireAtWill (a, b, c, t);
 	}
 
@@ -23,11 +23,11 @@ public class Projectile_Script : MonoBehaviour {
 		if (tankscript.selectedStruct == Tank_Script.EquationStruct.Standard) {
 			transform.position = new Vector3 (t, (a * Mathf.Pow (t, 2)) + (b * t) + c, 0);
 		} else if (tankscript.selectedStruct == Tank_Script.EquationStruct.Intercept) {
-			transform.position = new Vector3 (t, (a * (t + b) * (t - c)));
+			transform.position = new Vector3 (t, (a * (t + b) * (t - c)), 0);
 		} else if (tankscript.selectedStruct == Tank_Script.EquationStruct.Vertex) {
-
+			transform.position = new Vector3 (t, (a * Mathf.Pow((t - b),2) + c), 0);
 		} else if (tankscript.selectedStruct == Tank_Script.EquationStruct.None) {
-
+			Debug.Log ("what are you doin' m8");
 		}
 	}
 
@@ -42,6 +42,7 @@ public class Projectile_Script : MonoBehaviour {
 			Tank_Script tankscript = tank.GetComponent<Tank_Script> ();
 			if (tankscript.targetsRemaining == 0) {
 				tankscript.Win ();
+				Destroy (this.gameObject);
 			} else {
 				tankscript.fails++;
 				tankscript.canFire = true;

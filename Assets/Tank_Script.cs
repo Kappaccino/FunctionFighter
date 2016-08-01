@@ -8,6 +8,7 @@ public class Tank_Script : MonoBehaviour {
 	public Vector3 targetPos, heighestPoint;
 	public GameObject target;
 	public GameObject[] targets;
+	public GameObject targetTemplate;
 	public GameObject projectileTemplate;
 	public int fails;
 
@@ -39,12 +40,18 @@ public class Tank_Script : MonoBehaviour {
 	public Text winAnnounce;
 	public Button nextLevel;
 	public Button quit;
+	public GameObject structSelect;
 
 	public EquationStruct selectedStruct;
 
 	//y = mx^2 + c
 	// Use this for initialization
 	void Start () {
+
+		GameObject target1 = Instantiate (targetTemplate, new Vector3(5, 7.5f, 0), Quaternion.identity) as GameObject;
+		GameObject target2 = Instantiate (targetTemplate, new Vector3 (10, 0, 0), Quaternion.identity) as GameObject;
+		GameObject target3 = Instantiate (targetTemplate, new Vector3 (2, 4.8f, 0), Quaternion.identity) as GameObject;
+
 		selectedStruct = EquationStruct.None;
 		fails = 0;
 		canFire = true;
@@ -57,6 +64,7 @@ public class Tank_Script : MonoBehaviour {
 		winAnnounce.gameObject.SetActive (false);
 		nextLevel.gameObject.SetActive (false);
 		quit.gameObject.SetActive (false);
+
 	}
 	
 	// Update is called once per frame
@@ -74,6 +82,7 @@ public class Tank_Script : MonoBehaviour {
 		// f'(x) = 2ax + b 
 
 		//Debug.Log (selectedStruct);
+		Debug.Log(targetsRemaining);
 	}
 
 	public void FireProjectile(){
@@ -103,10 +112,20 @@ public class Tank_Script : MonoBehaviour {
 				targetPos = projectile.transform.position;
 				canFire = false;
 			} else if (selectedStruct == EquationStruct.Vertex) {
-
+				a = -(float.Parse (structVert_input_A.text));
+				b = float.Parse (structVert_input_B.text);
+				c = float.Parse (structVert_input_C.text);
+				GameObject projectile = Instantiate (projectileTemplate, transform.position, Quaternion.identity) as GameObject;
+				Projectile_Script p = projectile.GetComponent<Projectile_Script> ();
+				p.a = a;
+				p.b = b;
+				p.c = c;
+				target = projectile;
+				targetPos = projectile.transform.position;
+				canFire = false;
 
 			} else if (selectedStruct == EquationStruct.None) {
-
+				Debug.Log ("what are you doin' m8");
 
 			}
 		}
@@ -114,12 +133,11 @@ public class Tank_Script : MonoBehaviour {
 
 	public void Win(){
 
-		GameObject[] UIpieces;
-		UIpieces = GameObject.FindGameObjectsWithTag ("InGameUI");
-		foreach (GameObject InGameUI in UIpieces) {
-			InGameUI.SetActive (false);
-		}
-
+//		GameObject[] UIpieces;
+//		UIpieces = GameObject.FindGameObjectsWithTag ("InGameUI");
+//		foreach (GameObject InGameUI in UIpieces) {
+//			InGameUI.SetActive (false);
+//		}
 
 //		eq1.gameObject.SetActive (false);
 //		eq2.gameObject.SetActive (false);
@@ -131,9 +149,27 @@ public class Tank_Script : MonoBehaviour {
 //		//input_C.gameObject.SetActive (false);
 //		title.gameObject.SetActive (false);
 
-		winAnnounce.gameObject.SetActive (true);
-		nextLevel.gameObject.SetActive (true);
-		quit.gameObject.SetActive (true);
+//		winAnnounce.gameObject.SetActive (true);
+//		nextLevel.gameObject.SetActive (true);
+//		quit.gameObject.SetActive (true);
+
+		GameObject[] equationUI;
+		equationUI = GameObject.FindGameObjectsWithTag ("Equation");
+		foreach (GameObject Equation in equationUI) {
+			Equation.SetActive (false);
+		}
+
+		GameObject fireButton;
+		fireButton = GameObject.FindGameObjectWithTag ("FireButton");
+		fireButton.SetActive (false);
+
+		structSelect.SetActive (true);
+
+		GameObject target1 = Instantiate (targetTemplate, new Vector3(6, 0, 0), Quaternion.identity) as GameObject;
+		GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
+
+		targets = GameObject.FindGameObjectsWithTag ("target");
+		targetsRemaining = targets.Length;
 
 		selectedStruct = EquationStruct.None;
 	}
@@ -174,7 +210,7 @@ public class Tank_Script : MonoBehaviour {
 			}
 
 			float input_b_value;
-			input_b_value = Mathf.Abs (float.Parse (structStand_input_B.text));
+			input_b_value = Mathf.Abs(float.Parse (structStand_input_B.text));
 
 			if (input_b_value > 10) {
 				input_b_value = 10;
