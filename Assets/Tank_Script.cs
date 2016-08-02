@@ -43,8 +43,9 @@ public class Tank_Script : MonoBehaviour {
 	public Button nextLevel;
 	public Button quit;
 	public GameObject structSelect;
-	public GameObject SelectionUI;
-	public GameObject[] EquationUI;
+	public GameObject selectionUI;
+	public GameObject[] equationUI;
+	public GameObject ChangeEQStruct;
 
 	public EquationStruct selectedStruct;
 
@@ -89,7 +90,7 @@ public class Tank_Script : MonoBehaviour {
 		// f'(x) = 2ax + b 
 
 		//Debug.Log (selectedStruct);
-		Debug.Log(helpActive);
+		Debug.Log(selectedStruct);
 	}
 
 	public void FireProjectile(){
@@ -306,9 +307,10 @@ public class Tank_Script : MonoBehaviour {
 
 		selectedStruct = EquationStruct.None;
 
-		GameObject selectionUI;
-		selectionUI = GameObject.FindGameObjectWithTag ("StructSelect");
-		selectionUI.SetActive (true);
+//		GameObject selectionUI;
+//		selectionUI = GameObject.FindGameObjectWithTag ("StructSelect");
+//		selectionUI.SetActive (true);
+		selectionUI.SetActive(true);
 	}
 
 	public void ChooseStandardForm(){
@@ -316,6 +318,7 @@ public class Tank_Script : MonoBehaviour {
 		Debug.Log ("Standard Form Selected");
 		formatSelection.gameObject.SetActive (false);
 		eqstruct_Standard.gameObject.SetActive (true);
+		ChangeEQStruct.SetActive (true);
 	}
 
 	public void ChooseInterceptForm(){
@@ -323,6 +326,7 @@ public class Tank_Script : MonoBehaviour {
 		Debug.Log ("Intercept Form Selected");
 		formatSelection.gameObject.SetActive (false);
 		eqstruct_Intercept.gameObject.SetActive (true);
+		ChangeEQStruct.SetActive (true);
 	}
 
 	public void ChooseVertexForm(){
@@ -330,6 +334,7 @@ public class Tank_Script : MonoBehaviour {
 		Debug.Log ("Vertex Form Selected");
 		formatSelection.gameObject.SetActive (false);
 		eqstruct_Vertex.gameObject.SetActive (true);
+		ChangeEQStruct.SetActive (true);
 	}
 
 	public void StandardFormHelp(){
