@@ -27,7 +27,8 @@ public class Tank_Script : MonoBehaviour {
 	public Text title;
 
 	public Text hints;
-	private string hint1, hint2, hint3;
+	private string standardHint1, standardHint2, standardHint3,
+					interceptHint1, interceptHint2, interceptHint3;
 
 	public int targetsRemaining;
 	public bool canFire;
@@ -51,6 +52,9 @@ public class Tank_Script : MonoBehaviour {
 
 	public bool helpActive;
 
+	public GameObject winScreen;
+	public GameObject loseScreen;
+
 	//y = mx^2 + c
 	// Use this for initialization
 	void Start () {
@@ -64,9 +68,13 @@ public class Tank_Script : MonoBehaviour {
 		canFire = true;
 		targets = GameObject.FindGameObjectsWithTag ("target");
 		targetsRemaining = targets.Length;
-		hint1 = "This function is in standard form. In this form, changing the lowering the a variable will make the parabola steeper, and the projectile will not go as far.\n";
-		hint2 = "In standard form, changing the b variable will affect the angle of the projectile\n";
-		hint3 = "The correct equation for this problem is y=-0.3x^2+3x+0\n";
+		standardHint1 = "This function is in standard form. In this form, increasing the a variable will reduce the height and length of the parabola.\n";
+		standardHint2 = "In this form, increasing the b variable will increase the angle of the cannon's barrel, making the projectile go higher and further.\n";
+		standardHint3 = "The correct equation for this problem is y=-0.3x^2+3x+0.\n";
+
+		interceptHint1 = "This function is in intercept form. In this form, increasing the a variable will make the parabola steeper, however it will not change the horizontal distance the projectile covers.\n";
+		interceptHint2 = "In this form, increasing the b variable will increase the angle of the cannon's barrel, making the projectile go higher and further.\n";
+		interceptHint3 = "The positions that the parabola crosses the x-axis are shown in this form by the numbers in the brackets. One of them is already given to you (0,0)\n";
 
 		winAnnounce.gameObject.SetActive (false);
 		nextLevel.gameObject.SetActive (false);
@@ -89,8 +97,7 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-		//Debug.Log (selectedStruct);
-		Debug.Log(selectedStruct);
+		Debug.Log (targetsRemaining);
 	}
 
 	public void FireProjectile(){
@@ -180,6 +187,10 @@ public class Tank_Script : MonoBehaviour {
 		targetsRemaining = targets.Length;
 
 		selectedStruct = EquationStruct.None;
+
+		selectionUI.SetActive (false);
+
+		winScreen.SetActive (true);
 	}
 
 	public void Fail(){
@@ -187,13 +198,53 @@ public class Tank_Script : MonoBehaviour {
 			cannontarget.gameObject.SetActive (true);
 		}
 
+		targetsRemaining = targets.Length;
+
 		if (fails == 0) {
 		} else if (fails == 1) {
-			hints.text = hint1;
+			if (selectedStruct == EquationStruct.Standard) {
+				hints.text = standardHint1;
+			} else if (selectedStruct == EquationStruct.Intercept) {
+				hints.text = interceptHint1;
+			}
 		} else if (fails == 2) {
-			hints.text = hint1 + hint2;
-		} else if (fails > 2) {
-			hints.text = hint1 + hint2 + hint3;
+			if (selectedStruct == EquationStruct.Standard) {
+				hints.text = standardHint1 + standardHint2;
+			} else if (selectedStruct == EquationStruct.Intercept) {
+				hints.text = interceptHint1 + interceptHint2;
+			}
+		} else if (fails == 3) {
+			if (selectedStruct == EquationStruct.Standard) {
+				hints.text = standardHint1 + standardHint2 + standardHint3;
+			} else if (selectedStruct == EquationStruct.Intercept) {
+				hints.text = interceptHint1 + interceptHint2 + interceptHint3;
+			}
+		} else if (fails > 3) {
+			GameObject[] equationUI;
+			equationUI = GameObject.FindGameObjectsWithTag ("Equation");
+			foreach (GameObject Equation in equationUI) {
+				Equation.SetActive (false);
+			}
+
+			GameObject fireButton;
+			fireButton = GameObject.FindGameObjectWithTag ("FireButton");
+			fireButton.SetActive (false);
+
+			structSelect.SetActive (true);
+
+			GameObject target1 = Instantiate (targetTemplate, new Vector3(6, 0, 0), Quaternion.identity) as GameObject;
+			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
+
+			targets = GameObject.FindGameObjectsWithTag ("target");
+			targetsRemaining = targets.Length;
+
+			selectedStruct = EquationStruct.None;
+
+			selectionUI.SetActive (false);
+
+			hints.text = "";
+
+			loseScreen.SetActive (true);
 		}
 	}
 
@@ -338,20 +389,20 @@ public class Tank_Script : MonoBehaviour {
 	}
 
 	public void StandardFormHelp(){
-		if (!standardFormHelp.gameObject.active && helpActive == false) {
+		if (standardFormHelp.gameObject.activeSelf == false && helpActive == false) {
 			standardFormHelp.SetActive (true);
 			helpActive = true;
-		} else if(standardFormHelp.gameObject.active && helpActive == true){
+		} else if(standardFormHelp.gameObject.activeSelf == true && helpActive == true){
 			standardFormHelp.SetActive (false);
 			helpActive = false;
 		}
 	}
 
 	public void InterceptFormHelp(){
-		if (!interceptFormHelp.gameObject.active && helpActive == false) {
+		if (interceptFormHelp.gameObject.activeSelf == false && helpActive == false) {
 			interceptFormHelp.SetActive (true);
 			helpActive = true;
-		} else if(interceptFormHelp.gameObject.active && helpActive == true){
+		} else if(interceptFormHelp.gameObject.activeSelf == true && helpActive == true){
 			interceptFormHelp.SetActive (false);
 			helpActive = false;
 		}
