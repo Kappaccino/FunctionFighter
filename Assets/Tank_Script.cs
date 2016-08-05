@@ -55,6 +55,8 @@ public class Tank_Script : MonoBehaviour {
 	public GameObject winScreen;
 	public GameObject loseScreen;
 
+	public int score;
+
 	//y = mx^2 + c
 	// Use this for initialization
 	void Start () {
@@ -62,6 +64,8 @@ public class Tank_Script : MonoBehaviour {
 		GameObject target1 = Instantiate (targetTemplate, new Vector3(5, 7.5f, 0), Quaternion.identity) as GameObject;
 		GameObject target2 = Instantiate (targetTemplate, new Vector3 (10, 0, 0), Quaternion.identity) as GameObject;
 		GameObject target3 = Instantiate (targetTemplate, new Vector3 (2, 4.8f, 0), Quaternion.identity) as GameObject;
+
+		score = 0;
 
 		selectedStruct = EquationStruct.None;
 		fails = 0;
@@ -97,7 +101,7 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-		Debug.Log (targetsRemaining);
+//		Debug.Log (targets.Length);
 	}
 
 	public void FireProjectile(){
@@ -161,7 +165,7 @@ public class Tank_Script : MonoBehaviour {
 //		hints.gameObject.SetActive (false);
 //		input_A.gameObject.SetActive (false);
 //		input_B.gameObject.SetActive (false);
-//		//input_C.gameObject.SetActive (false);
+//		input_C.gameObject.SetActive (false);
 //		title.gameObject.SetActive (false);
 
 //		winAnnounce.gameObject.SetActive (true);
@@ -174,23 +178,37 @@ public class Tank_Script : MonoBehaviour {
 			Equation.SetActive (false);
 		}
 
-		GameObject fireButton;
-		fireButton = GameObject.FindGameObjectWithTag ("FireButton");
-		fireButton.SetActive (false);
+//		GameObject fireButton;
+//		fireButton = GameObject.FindGameObjectWithTag ("FireButton");
+//		fireButton.SetActive (false);
 
-		structSelect.SetActive (true);
+//		structSelect.SetActive (true);
 
-		GameObject target1 = Instantiate (targetTemplate, new Vector3(6, 0, 0), Quaternion.identity) as GameObject;
-		GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
+//		GameObject target1 = Instantiate (targetTemplate, new Vector3(6, 0, 0), Quaternion.identity) as GameObject;
+//		GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
 
-		targets = GameObject.FindGameObjectsWithTag ("target");
-		targetsRemaining = targets.Length;
+//		targets = GameObject.FindGameObjectsWithTag ("target");
+		foreach (GameObject target in targets) {
+			GameObject.Destroy(target);
+		}
+//		targetsRemaining = targets.Length;
+
+
 
 		selectedStruct = EquationStruct.None;
 
 		selectionUI.SetActive (false);
 
 		winScreen.SetActive (true);
+
+		if (fails == 0) {
+			score += 3;
+		} else if (fails == 1) {
+			score += 2;
+		} else if (fails == 2) {
+			score += 1;
+		}
+
 	}
 
 	public void Fail(){
@@ -226,16 +244,17 @@ public class Tank_Script : MonoBehaviour {
 				Equation.SetActive (false);
 			}
 
-			GameObject fireButton;
-			fireButton = GameObject.FindGameObjectWithTag ("FireButton");
-			fireButton.SetActive (false);
+//			GameObject fireButton;
+//			fireButton = GameObject.FindGameObjectWithTag ("FireButton");
+//			fireButton.SetActive (false);
 
 			structSelect.SetActive (true);
 
-			GameObject target1 = Instantiate (targetTemplate, new Vector3(6, 0, 0), Quaternion.identity) as GameObject;
-			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
+//			GameObject target1 = Instantiate (targetTemplate, new Vector3(6, 0, 0), Quaternion.identity) as GameObject;
+//			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
 
 			targets = GameObject.FindGameObjectsWithTag ("target");
+			Debug.Log (targets);
 			targetsRemaining = targets.Length;
 
 			selectedStruct = EquationStruct.None;
@@ -252,8 +271,16 @@ public class Tank_Script : MonoBehaviour {
 		Application.Quit();
 	}
 
-	public void LoadScene (){
-		SceneManager.LoadScene (0, LoadSceneMode.Single);
+	public void NextLevel (){
+		//SceneManager.LoadScene (0, LoadSceneMode.Single);
+		winScreen.SetActive(false);
+		GameObject target1 = Instantiate (targetTemplate, new Vector3 (6,0,0), Quaternion.identity) as GameObject;
+		GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
+
+		targets = GameObject.FindGameObjectsWithTag ("target");
+		targetsRemaining = targets.Length;
+		selectionUI.SetActive (true);
+		canFire = true;
 	}
 
 	public void CheckAValue(){
