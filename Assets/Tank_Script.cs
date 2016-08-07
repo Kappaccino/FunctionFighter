@@ -56,6 +56,7 @@ public class Tank_Script : MonoBehaviour {
 	public GameObject loseScreen;
 
 	public int score;
+	public int completedLevels;
 
 	//y = mx^2 + c
 	// Use this for initialization
@@ -66,6 +67,7 @@ public class Tank_Script : MonoBehaviour {
 		GameObject target3 = Instantiate (targetTemplate, new Vector3 (2, 4.8f, 0), Quaternion.identity) as GameObject;
 
 		score = 0;
+		completedLevels = 0;
 
 		selectedStruct = EquationStruct.None;
 		fails = 0;
@@ -101,7 +103,7 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-//		Debug.Log (targets.Length);
+		Debug.Log (completedLevels);
 	}
 
 	public void FireProjectile(){
@@ -171,6 +173,8 @@ public class Tank_Script : MonoBehaviour {
 //		winAnnounce.gameObject.SetActive (true);
 //		nextLevel.gameObject.SetActive (true);
 //		quit.gameObject.SetActive (true);
+
+		completedLevels++;
 
 		GameObject[] equationUI;
 		equationUI = GameObject.FindGameObjectsWithTag ("Equation");
@@ -274,8 +278,21 @@ public class Tank_Script : MonoBehaviour {
 	public void NextLevel (){
 		//SceneManager.LoadScene (0, LoadSceneMode.Single);
 		winScreen.SetActive(false);
-		GameObject target1 = Instantiate (targetTemplate, new Vector3 (6,0,0), Quaternion.identity) as GameObject;
-		GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
+
+		if (completedLevels == 1) {
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (6, 0, 0), Quaternion.identity) as GameObject;
+			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
+		} else if (completedLevels == 2) {
+
+		} else if (completedLevels == 3) {
+
+		} else if (completedLevels == 4) {
+
+		} else if (completedLevels == 5) {
+
+		} else {
+			print ("what are u doin' m8");
+		}
 
 		targets = GameObject.FindGameObjectsWithTag ("target");
 		targetsRemaining = targets.Length;
