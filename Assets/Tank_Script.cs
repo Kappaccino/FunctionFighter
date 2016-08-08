@@ -58,6 +58,8 @@ public class Tank_Script : MonoBehaviour {
 	public int score;
 	public int completedLevels;
 
+	public GameObject fireButton;
+
 	//y = mx^2 + c
 	// Use this for initialization
 	void Start () {
@@ -103,7 +105,7 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-		Debug.Log (completedLevels);
+		Debug.Log (targetsRemaining);
 	}
 
 	public void FireProjectile(){
@@ -205,6 +207,8 @@ public class Tank_Script : MonoBehaviour {
 
 		winScreen.SetActive (true);
 
+		fireButton.SetActive (false);
+
 		if (fails == 0) {
 			score += 3;
 		} else if (fails == 1) {
@@ -280,18 +284,58 @@ public class Tank_Script : MonoBehaviour {
 		winScreen.SetActive(false);
 
 		if (completedLevels == 1) {
+//		BEST STRUCTURE: INTERCEPT
+//		SOLUTION: 0.5, 6
 			GameObject target1 = Instantiate (targetTemplate, new Vector3 (6, 0, 0), Quaternion.identity) as GameObject;
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
 		} else if (completedLevels == 2) {
-
+//		BEST STRUCTURE: INTERCEPT
+//		SOLUTION: 1.2, 5
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2.5f, 7.5f, 0), Quaternion.identity) as GameObject;
+			GameObject target2 = Instantiate (targetTemplate, new Vector3 (5, 0, 0), Quaternion.identity) as GameObject;
 		} else if (completedLevels == 3) {
-
+//		BEST STRUCTURE: STANDARD
+//		SOLUTION: 0.6, 3.6
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2, 4.8f, 0), Quaternion.identity) as GameObject;
+			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 5.4f, 0), Quaternion.identity) as GameObject;
+			GameObject target3 = Instantiate (targetTemplate, new Vector3 (4.5f, 4.05f, 0), Quaternion.identity) as GameObject;
 		} else if (completedLevels == 4) {
-
+//		BEST STRUCTURE: STANDARD
+//		SOLUTION 0.4, 3.2
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2.5f, 5.5f, 0), Quaternion.identity) as GameObject;
+			GameObject target2 = Instantiate (targetTemplate, new Vector3 (4, 6.4f, 0), Quaternion.identity) as GameObject;
+			GameObject target3 = Instantiate (targetTemplate, new Vector3 (6, 4.8f, 0), Quaternion.identity) as GameObject;
 		} else if (completedLevels == 5) {
-
+//		BEST STRUCTURE: INTERCEPT
+//		SOLUTION: 0.4, 10
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (5, 10, 0), Quaternion.identity) as GameObject;
+			GameObject target2 = Instantiate (targetTemplate, new Vector3 (10, 0, 0), Quaternion.identity) as GameObject;
+		} else if (completedLevels == 6) {
+//		BEST STRUCTURE: STANDARD
+//		SOLUTION: 0.1, 1
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2, 1.6f, 0), Quaternion.identity) as GameObject;
+			GameObject target2 = Instantiate (targetTemplate, new Vector3 (5, 2.5f, 0), Quaternion.identity) as GameObject;
+			GameObject target3 = Instantiate (targetTemplate, new Vector3 (8, 1.6f, 0), Quaternion.identity) as GameObject;
+		} else if (completedLevels == 6) {
+//		BEST STRUCTURE: STANDARD
+//		SOLUTION: 1, 6
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2, 8, 0), Quaternion.identity) as GameObject;
+			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 9, 0), Quaternion.identity) as GameObject;
+			GameObject target3 = Instantiate (targetTemplate, new Vector3 (5, 5, 0), Quaternion.identity) as GameObject;
+		} else if (completedLevels == 7) {
+//		BEST STRUCTURE: INTERCEPT
+//		SOLUTION: 0.1, 10
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (5,2.5f,0), Quaternion.identity) as GameObject;
+			GameObject target2 = Instantiate (targetTemplate, new Vector3 (10, 0, 0), Quaternion.identity) as GameObject;
+		} else if (completedLevels == 8) {
+//		BEST STRUCTURE: INTERCEPT
+//		SOLUTION: 0.3, 8
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (4,4.8f,0), Quaternion.identity) as GameObject;
+			GameObject target2 = Instantiate (targetTemplate, new Vector3 (8, 0, 0), Quaternion.identity) as GameObject;
+		} else if (completedLevels == 9) {
+//		WINNER
 		} else {
-			print ("what are u doin' m8");
+
 		}
 
 		targets = GameObject.FindGameObjectsWithTag ("target");
@@ -301,37 +345,46 @@ public class Tank_Script : MonoBehaviour {
 	}
 
 	public void CheckAValue(){
-		if (selectedStruct == EquationStruct.Standard) {
-			float input_a_value;
-			input_a_value = Mathf.Abs (float.Parse (structStand_input_A.text));
 
-			if (input_a_value > 10) {
-				input_a_value = 10;
-				structStand_input_A.text = input_a_value.ToString ();
-			} else {
-				structStand_input_A.text = input_a_value.ToString ();
+		if (structStand_input_A.text != null){
+			if (selectedStruct == EquationStruct.Standard) {
+				float input_a_value;
+				input_a_value = Mathf.Abs (float.Parse (structStand_input_A.text));
+
+				if (input_a_value > 10) {
+					input_a_value = 10;
+					structStand_input_A.text = input_a_value.ToString ();
+				} else {
+					structStand_input_A.text = input_a_value.ToString ();
+				}
 			}
 
-			float input_b_value;
-			input_b_value = Mathf.Abs(float.Parse (structStand_input_B.text));
+		
+			if (structStand_input_B.text != null) {
+				float input_b_value;
+				input_b_value = Mathf.Abs (float.Parse (structStand_input_B.text));
 
-			if (input_b_value > 10) {
-				input_b_value = 10;
-				structStand_input_B.text = input_b_value.ToString ();
-			} else {
-				structStand_input_B.text = input_b_value.ToString ();
+				if (input_b_value > 10) {
+					input_b_value = 10;
+					structStand_input_B.text = input_b_value.ToString ();
+				} else {
+					structStand_input_B.text = input_b_value.ToString ();
+				}
 			}
+
 
 		} else if (selectedStruct == EquationStruct.Intercept) {
-			Debug.Log ("Checking A value (intercept form)");
-			float input_a_value;
-			input_a_value = Mathf.Abs (float.Parse (structInter_input_A.text));
 
-			if (input_a_value > 10) {
-				input_a_value = 10;
-				structInter_input_A.text = input_a_value.ToString ();
-			} else {
-				structInter_input_A.text = input_a_value.ToString ();
+			if (structInter_input_A.text != null) {
+				float input_a_value;
+				input_a_value = Mathf.Abs (float.Parse (structInter_input_A.text));
+
+				if (input_a_value > 10) {
+					input_a_value = 10;
+					structInter_input_A.text = input_a_value.ToString ();
+				} else {
+					structInter_input_A.text = input_a_value.ToString ();
+				}
 			}
 
 //			float input_b_value;
@@ -344,46 +397,55 @@ public class Tank_Script : MonoBehaviour {
 //				structInter_input_A.text = input_b_value.ToString ();
 //			}
 
-			float input_c_value;
-			input_c_value = Mathf.Abs (float.Parse (structInter_input_C.text));
 
-			if (input_c_value > 10) {
-				input_c_value = 10;
-				structInter_input_C.text = input_c_value.ToString ();
-			} else {
-				structInter_input_C.text = input_c_value.ToString ();
+			if (structInter_input_C.text != null) {
+				float input_c_value;
+				input_c_value = Mathf.Abs (float.Parse (structInter_input_C.text));
+
+				if (input_c_value > 10) {
+					input_c_value = 10;
+					structInter_input_C.text = input_c_value.ToString ();
+				} else {
+					structInter_input_C.text = input_c_value.ToString ();
+				}
 			}
 
 		} else if (selectedStruct == EquationStruct.Vertex) {
-			Debug.Log ("Checking A value (vertex form)");
-			float input_a_value;
-			input_a_value = Mathf.Abs (float.Parse (structVert_input_A.text));
 
-			if (input_a_value > 10) {
-				input_a_value = 10;
-				structVert_input_A.text = input_a_value.ToString ();
-			} else {
-				structVert_input_A.text = input_a_value.ToString ();
+			if (structVert_input_A.text != null) {
+				float input_a_value;
+				input_a_value = Mathf.Abs (float.Parse (structVert_input_A.text));
+
+				if (input_a_value > 10) {
+					input_a_value = 10;
+					structVert_input_A.text = input_a_value.ToString ();
+				} else {
+					structVert_input_A.text = input_a_value.ToString ();
+				}
 			}
 
-			float input_b_value;
-			input_b_value = Mathf.Abs (float.Parse (structVert_input_B.text));
+			if (structVert_input_B.text != null) {
+				float input_b_value;
+				input_b_value = Mathf.Abs (float.Parse (structVert_input_B.text));
 
-			if (input_b_value > 10) {
-				input_b_value = 10;
-				structVert_input_B.text = input_b_value.ToString ();
-			} else {
-				structVert_input_A.text = input_b_value.ToString ();
+				if (input_b_value > 10) {
+					input_b_value = 10;
+					structVert_input_B.text = input_b_value.ToString ();
+				} else {
+					structVert_input_A.text = input_b_value.ToString ();
+				}
 			}
 
-			float input_c_value;
-			input_c_value = Mathf.Abs (float.Parse (structVert_input_C.text));
+			if (structVert_input_C.text != null) {
+				float input_c_value;
+				input_c_value = Mathf.Abs (float.Parse (structVert_input_C.text));
 
-			if (input_c_value > 10) {
-				input_c_value = 10;
-				structVert_input_C.text = input_c_value.ToString ();
-			} else {
-				structVert_input_C.text = input_c_value.ToString ();
+				if (input_c_value > 10) {
+					input_c_value = 10;
+					structVert_input_C.text = input_c_value.ToString ();
+				} else {
+					structVert_input_C.text = input_c_value.ToString ();
+				}
 			}
 
 
@@ -400,6 +462,8 @@ public class Tank_Script : MonoBehaviour {
 			Equation.SetActive (false);
 		}
 
+		fireButton.SetActive (false);
+
 		selectedStruct = EquationStruct.None;
 
 //		GameObject selectionUI;
@@ -414,6 +478,7 @@ public class Tank_Script : MonoBehaviour {
 		formatSelection.gameObject.SetActive (false);
 		eqstruct_Standard.gameObject.SetActive (true);
 		ChangeEQStruct.SetActive (true);
+		fireButton.SetActive (true);
 	}
 
 	public void ChooseInterceptForm(){
@@ -422,6 +487,7 @@ public class Tank_Script : MonoBehaviour {
 		formatSelection.gameObject.SetActive (false);
 		eqstruct_Intercept.gameObject.SetActive (true);
 		ChangeEQStruct.SetActive (true);
+		fireButton.SetActive (true);
 	}
 
 	public void ChooseVertexForm(){
@@ -430,6 +496,7 @@ public class Tank_Script : MonoBehaviour {
 		formatSelection.gameObject.SetActive (false);
 		eqstruct_Vertex.gameObject.SetActive (true);
 		ChangeEQStruct.SetActive (true);
+		fireButton.SetActive (true);
 	}
 
 	public void StandardFormHelp(){
