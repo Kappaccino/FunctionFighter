@@ -64,9 +64,9 @@ public class Tank_Script : MonoBehaviour {
 
 	public Text gameEnd;
 	public GameObject EndGameScreen;
-
 	//y = mx^2 + c
 	// Use this for initialization
+
 	void Start () {
 //		Analytics.CustomEvent ("testEvent", new Dictionary<string,object> {
 //			{"testing testing 123", targetsRemaining}
@@ -115,7 +115,12 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-		Debug.Log (score);
+		if(Input.GetKeyDown(KeyCode.W)){
+			Win();
+		};
+
+		Debug.Log (completedLevels);
+		
 	}
 
 	public void FireProjectile(){
@@ -132,6 +137,7 @@ public class Tank_Script : MonoBehaviour {
 				target = projectile;
 				targetPos = projectile.transform.position;
 				canFire = false;
+				ChangeEQStruct.SetActive (false);
 			} else if (selectedStruct == EquationStruct.Intercept) {
 				a = -(float.Parse (structInter_input_A.text));
 				b = 0;
@@ -220,9 +226,9 @@ public class Tank_Script : MonoBehaviour {
 		fireButton.SetActive (false);
 
 		if (fails == 0) {
-			score += 3;
+			score += 100;
 		} else if (fails == 1) {
-			score += 2;
+			score += 10;
 		} else if (fails == 2) {
 			score += 1;
 		}
@@ -335,24 +341,30 @@ public class Tank_Script : MonoBehaviour {
 		} else if (completedLevels == 7) {
 //		BEST STRUCTURE: INTERCEPT
 //		SOLUTION: 0.1, 10
-			GameObject target1 = Instantiate (targetTemplate, new Vector3 (5,2.5f,0), Quaternion.identity) as GameObject;
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (5, 2.5f, 0), Quaternion.identity) as GameObject;
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (10, 0, 0), Quaternion.identity) as GameObject;
 		} else if (completedLevels == 8) {
 //		BEST STRUCTURE: INTERCEPT
 //		SOLUTION: 0.3, 8
-			GameObject target1 = Instantiate (targetTemplate, new Vector3 (4,4.8f,0), Quaternion.identity) as GameObject;
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (4, 4.8f, 0), Quaternion.identity) as GameObject;
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (8, 0, 0), Quaternion.identity) as GameObject;
 		} else if (completedLevels == 9) {
-//		WINNER
+//		BEST STRUCTURE: STANDARD
+//		SOLUTION: 0.5, 3
+			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2,4,0), Quaternion.identity) as GameObject;
+			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
+			GameObject target3 = Instantiate (targetTemplate, new Vector3 (5.6f, 1.12f, 0), Quaternion.identity) as GameObject;
+		} else if (completedLevels == 10) {
+			//		WINNER
 			Analytics.CustomEvent ("endGame", new Dictionary<string, object> {
-				{"Score", score}
+				{ "Score", score }
 			});
 
 			EndGameScreen.SetActive (true);
 			gameEnd.text = "Great job! You scored: " + score;
 
 		} else {
-
+			Debug.Log ("I can't believe you've done this");
 		}
 
 		targets = GameObject.FindGameObjectsWithTag ("target");

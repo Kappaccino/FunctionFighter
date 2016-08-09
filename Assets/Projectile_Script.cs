@@ -40,6 +40,7 @@ public class Projectile_Script : MonoBehaviour {
 
 		if (other.gameObject.tag == "boundry") {
 			Tank_Script tankscript = tank.GetComponent<Tank_Script> ();
+			tankscript.ChangeEQStruct.SetActive (true);
 			if (tankscript.targetsRemaining == 0) {
 				tankscript.Win ();
 				Destroy (this.gameObject);
