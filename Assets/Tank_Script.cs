@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class Tank_Script : MonoBehaviour {
 
@@ -60,9 +62,17 @@ public class Tank_Script : MonoBehaviour {
 
 	public GameObject fireButton;
 
+	public Text gameEnd;
+	public GameObject EndGameScreen;
+
 	//y = mx^2 + c
 	// Use this for initialization
 	void Start () {
+//		Analytics.CustomEvent ("testEvent", new Dictionary<string,object> {
+//			{"testing testing 123", targetsRemaining}
+//		});
+
+		Debug.Log ("test event sent");
 
 		GameObject target1 = Instantiate (targetTemplate, new Vector3(5, 7.5f, 0), Quaternion.identity) as GameObject;
 		GameObject target2 = Instantiate (targetTemplate, new Vector3 (10, 0, 0), Quaternion.identity) as GameObject;
@@ -84,7 +94,7 @@ public class Tank_Script : MonoBehaviour {
 		interceptHint2 = "In this form, increasing the b variable will increase the angle of the cannon's barrel, making the projectile go higher and further.\n";
 		interceptHint3 = "The positions that the parabola crosses the x-axis are shown in this form by the numbers in the brackets. One of them is already given to you (0,0)\n";
 
-		winAnnounce.gameObject.SetActive (false);
+//		winAnnounce.gameObject.SetActive (false);
 		nextLevel.gameObject.SetActive (false);
 		quit.gameObject.SetActive (false);
 		helpActive = false;
@@ -105,7 +115,7 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-		Debug.Log (targetsRemaining);
+		Debug.Log (score);
 	}
 
 	public void FireProjectile(){
@@ -334,6 +344,13 @@ public class Tank_Script : MonoBehaviour {
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (8, 0, 0), Quaternion.identity) as GameObject;
 		} else if (completedLevels == 9) {
 //		WINNER
+			Analytics.CustomEvent ("endGame", new Dictionary<string, object> {
+				{"Score", score}
+			});
+
+			EndGameScreen.SetActive (true);
+			gameEnd.text = "Great job! You scored: " + score;
+
 		} else {
 
 		}
