@@ -74,8 +74,11 @@ public class Tank_Script : MonoBehaviour {
 //		});
 
 		GameObject target1 = Instantiate (targetTemplate, new Vector3(5, 7.5f, 0), Quaternion.identity) as GameObject;
+		target1.SetActive (true);
 		GameObject target2 = Instantiate (targetTemplate, new Vector3 (10, 0, 0), Quaternion.identity) as GameObject;
+		target2.SetActive (true);
 		GameObject target3 = Instantiate (targetTemplate, new Vector3 (2, 4.8f, 0), Quaternion.identity) as GameObject;
+		target3.SetActive (true);
 
 		score = 0;
 		completedLevels = 0;
@@ -85,6 +88,7 @@ public class Tank_Script : MonoBehaviour {
 		canFire = true;
 		targets = GameObject.FindGameObjectsWithTag ("target");
 		targetsRemaining = targets.Length;
+
 		standardHint1 = "This function is in standard form. In this form, increasing the a variable will reduce the height and length of the parabola.\n";
 		standardHint2 = "In this form, increasing the b variable will increase the angle of the cannon's barrel, making the projectile go higher and further.\n";
 		standardHint3 = "The correct equation for this problem is y=-0.3x^2+3x+0.\n";
@@ -117,9 +121,7 @@ public class Tank_Script : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.W)){
 			Win();
 		};
-
-
-		
+			
 	}
 
 	public void FireProjectile(){
@@ -315,57 +317,82 @@ public class Tank_Script : MonoBehaviour {
 //		BEST STRUCTURE: INTERCEPT
 //		SOLUTION: 0.5, 6
 			GameObject target1 = Instantiate (targetTemplate, new Vector3 (6, 0, 0), Quaternion.identity) as GameObject;
+			target1.SetActive (true);
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
+			target2.SetActive (true);
 		} else if (completedLevels == 2) {
 //		BEST STRUCTURE: INTERCEPT
 //		SOLUTION: 1.2, 5
 			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2.5f, 7.5f, 0), Quaternion.identity) as GameObject;
+			target1.SetActive (true);
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (5, 0, 0), Quaternion.identity) as GameObject;
+			target2.SetActive (true);
 		} else if (completedLevels == 3) {
 //		BEST STRUCTURE: STANDARD
 //		SOLUTION: 0.6, 3.6
 			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2, 4.8f, 0), Quaternion.identity) as GameObject;
+			target1.SetActive (true);
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 5.4f, 0), Quaternion.identity) as GameObject;
+			target2.SetActive (true);
 			GameObject target3 = Instantiate (targetTemplate, new Vector3 (4.5f, 4.05f, 0), Quaternion.identity) as GameObject;
+			target3.SetActive (true);
 		} else if (completedLevels == 4) {
 //		BEST STRUCTURE: STANDARD
 //		SOLUTION 0.4, 3.2
 			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2.5f, 5.5f, 0), Quaternion.identity) as GameObject;
+			target1.SetActive (true);
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (4, 6.4f, 0), Quaternion.identity) as GameObject;
+			target2.SetActive (true);
 			GameObject target3 = Instantiate (targetTemplate, new Vector3 (6, 4.8f, 0), Quaternion.identity) as GameObject;
+			target3.SetActive (true);
 		} else if (completedLevels == 5) {
 //		BEST STRUCTURE: INTERCEPT
 //		SOLUTION: 0.4, 10
 			GameObject target1 = Instantiate (targetTemplate, new Vector3 (5, 10, 0), Quaternion.identity) as GameObject;
+			target1.SetActive (true);
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (10, 0, 0), Quaternion.identity) as GameObject;
+			target2.SetActive (true);
 		} else if (completedLevels == 6) {
 //		BEST STRUCTURE: STANDARD
 //		SOLUTION: 0.1, 1
 			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2, 1.6f, 0), Quaternion.identity) as GameObject;
+			target1.SetActive (true);
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (5, 2.5f, 0), Quaternion.identity) as GameObject;
+			target2.SetActive (true);
 			GameObject target3 = Instantiate (targetTemplate, new Vector3 (8, 1.6f, 0), Quaternion.identity) as GameObject;
+			target3.SetActive (true);
 		} else if (completedLevels == 6) {
 //		BEST STRUCTURE: STANDARD
 //		SOLUTION: 1, 6
 			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2, 8, 0), Quaternion.identity) as GameObject;
+			target1.SetActive (true);
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 9, 0), Quaternion.identity) as GameObject;
+			target2.SetActive (true);
 			GameObject target3 = Instantiate (targetTemplate, new Vector3 (5, 5, 0), Quaternion.identity) as GameObject;
+			target3.SetActive (true);
 		} else if (completedLevels == 7) {
 //		BEST STRUCTURE: INTERCEPT
 //		SOLUTION: 0.1, 10
 			GameObject target1 = Instantiate (targetTemplate, new Vector3 (5, 2.5f, 0), Quaternion.identity) as GameObject;
+			target1.SetActive (true);
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (10, 0, 0), Quaternion.identity) as GameObject;
+			target2.SetActive (true);
 		} else if (completedLevels == 8) {
 //		BEST STRUCTURE: INTERCEPT
 //		SOLUTION: 0.3, 8
 			GameObject target1 = Instantiate (targetTemplate, new Vector3 (4, 4.8f, 0), Quaternion.identity) as GameObject;
+			target1.SetActive (true);
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (8, 0, 0), Quaternion.identity) as GameObject;
+			target2.SetActive (true);
 		} else if (completedLevels == 9) {
 //		BEST STRUCTURE: STANDARD
 //		SOLUTION: 0.5, 3
 			GameObject target1 = Instantiate (targetTemplate, new Vector3 (2,4,0), Quaternion.identity) as GameObject;
+			target1.SetActive (true);
 			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
+			target2.SetActive (true);
 			GameObject target3 = Instantiate (targetTemplate, new Vector3 (5.6f, 1.12f, 0), Quaternion.identity) as GameObject;
+			target3.SetActive (true);
 		} else if (completedLevels == 10) {
 			//		WINNER
 			Analytics.CustomEvent ("endGame", new Dictionary<string, object> {
@@ -383,6 +410,7 @@ public class Tank_Script : MonoBehaviour {
 		targetsRemaining = targets.Length;
 		selectionUI.SetActive (true);
 		canFire = true;
+
 	}
 
 	public void CheckAValue(){
