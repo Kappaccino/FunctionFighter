@@ -64,6 +64,7 @@ public class Tank_Script : MonoBehaviour {
 
 	public Text gameEnd;
 	public GameObject EndGameScreen;
+	public GameObject[] projectiles;
 	//y = mx^2 + c
 	// Use this for initialization
 
@@ -71,8 +72,6 @@ public class Tank_Script : MonoBehaviour {
 //		Analytics.CustomEvent ("testEvent", new Dictionary<string,object> {
 //			{"testing testing 123", targetsRemaining}
 //		});
-
-		Debug.Log ("test event sent");
 
 		GameObject target1 = Instantiate (targetTemplate, new Vector3(5, 7.5f, 0), Quaternion.identity) as GameObject;
 		GameObject target2 = Instantiate (targetTemplate, new Vector3 (10, 0, 0), Quaternion.identity) as GameObject;
@@ -95,8 +94,8 @@ public class Tank_Script : MonoBehaviour {
 		interceptHint3 = "The positions that the parabola crosses the x-axis are shown in this form by the numbers in the brackets. One of them is already given to you (0,0)\n";
 
 //		winAnnounce.gameObject.SetActive (false);
-		nextLevel.gameObject.SetActive (false);
-		quit.gameObject.SetActive (false);
+//		nextLevel.gameObject.SetActive (false);
+//		quit.gameObject.SetActive (false);
 		helpActive = false;
 
 	}
@@ -119,7 +118,7 @@ public class Tank_Script : MonoBehaviour {
 			Win();
 		};
 
-		Debug.Log (completedLevels);
+
 		
 	}
 
@@ -268,6 +267,8 @@ public class Tank_Script : MonoBehaviour {
 				Equation.SetActive (false);
 			}
 
+			completedLevels++;
+
 //			GameObject fireButton;
 //			fireButton = GameObject.FindGameObjectWithTag ("FireButton");
 //			fireButton.SetActive (false);
@@ -298,6 +299,17 @@ public class Tank_Script : MonoBehaviour {
 	public void NextLevel (){
 		//SceneManager.LoadScene (0, LoadSceneMode.Single);
 		winScreen.SetActive(false);
+		loseScreen.SetActive (false);
+		fireButton.SetActive (false);
+
+		foreach (GameObject target in targets) {
+			Destroy (target);
+		}
+
+		projectiles = GameObject.FindGameObjectsWithTag ("Projectile");
+		foreach (GameObject projectile in projectiles) {
+			Destroy (projectile);
+		}
 
 		if (completedLevels == 1) {
 //		BEST STRUCTURE: INTERCEPT
@@ -508,6 +520,7 @@ public class Tank_Script : MonoBehaviour {
 		eqstruct_Standard.gameObject.SetActive (true);
 		ChangeEQStruct.SetActive (true);
 		fireButton.SetActive (true);
+		StandardFormHelp ();
 	}
 
 	public void ChooseInterceptForm(){
@@ -517,6 +530,7 @@ public class Tank_Script : MonoBehaviour {
 		eqstruct_Intercept.gameObject.SetActive (true);
 		ChangeEQStruct.SetActive (true);
 		fireButton.SetActive (true);
+		InterceptFormHelp ();
 	}
 
 	public void ChooseVertexForm(){
@@ -532,9 +546,12 @@ public class Tank_Script : MonoBehaviour {
 		if (standardFormHelp.gameObject.activeSelf == false && helpActive == false) {
 			standardFormHelp.SetActive (true);
 			helpActive = true;
-		} else if(standardFormHelp.gameObject.activeSelf == true && helpActive == true){
+		} else if (standardFormHelp.gameObject.activeSelf == true && helpActive == true) {
 			standardFormHelp.SetActive (false);
 			helpActive = false;
+		} else if (standardFormHelp.gameObject.activeSelf == false && helpActive == true) {
+			interceptFormHelp.SetActive (false);
+			standardFormHelp.SetActive (true);
 		}
 	}
 
@@ -542,9 +559,12 @@ public class Tank_Script : MonoBehaviour {
 		if (interceptFormHelp.gameObject.activeSelf == false && helpActive == false) {
 			interceptFormHelp.SetActive (true);
 			helpActive = true;
-		} else if(interceptFormHelp.gameObject.activeSelf == true && helpActive == true){
+		} else if (interceptFormHelp.gameObject.activeSelf == true && helpActive == true) {
 			interceptFormHelp.SetActive (false);
 			helpActive = false;
+		} else if (interceptFormHelp.gameObject.activeSelf == false && helpActive == true) {
+			standardFormHelp.SetActive (false);
+			interceptFormHelp.SetActive (true);
 		}
 	}
 }

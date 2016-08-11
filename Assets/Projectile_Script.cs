@@ -43,7 +43,7 @@ public class Projectile_Script : MonoBehaviour {
 			tankscript.ChangeEQStruct.SetActive (true);
 			if (tankscript.targetsRemaining == 0) {
 				tankscript.Win ();
-				Destroy (this.gameObject);
+//				Destroy (this.gameObject);
 			} else {
 				tankscript.fails++;
 				tankscript.canFire = true;
