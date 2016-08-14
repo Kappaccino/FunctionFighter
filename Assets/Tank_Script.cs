@@ -118,9 +118,9 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-		if(Input.GetKeyDown(KeyCode.W)){
-			Win();
-		};
+//		if(Input.GetKeyDown(KeyCode.W)){
+//			Win();
+//		};
 			
 	}
 
