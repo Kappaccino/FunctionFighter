@@ -118,9 +118,9 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-//		if(Input.GetKeyDown(KeyCode.W)){
-//			Win();
-//		};
+		if(Input.GetKeyDown(KeyCode.W)){
+			Win();
+		};
 			
 	}
 
@@ -400,7 +400,7 @@ public class Tank_Script : MonoBehaviour {
 			});
 
 			EndGameScreen.SetActive (true);
-			gameEnd.text = "Great job! You scored: " + score;
+			gameEnd.text = "Great job! You scored: " + score + ". " + "Please take a moment to fill out a questionaire at https://goo.gl/forms/sC82EqT7RAs2jE9C2";
 
 		} else {
 			Debug.Log ("I can't believe you've done this");
