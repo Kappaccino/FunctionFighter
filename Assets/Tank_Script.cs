@@ -91,11 +91,11 @@ public class Tank_Script : MonoBehaviour {
 
 		standardHint1 = "This function is in standard form. In this form, increasing the a variable will reduce the height and length of the parabola.\n";
 		standardHint2 = "In this form, increasing the b variable will increase the angle of the cannon's barrel, making the projectile go higher and further.\n";
-		standardHint3 = "The correct equation for this problem is y=-0.3x^2+3x+0.\n";
+		standardHint3 = "The correct equation can be found by factoring the 'x' and 'y' values of the three targets to find the 'a', 'b' and 'c' values. 'c' is zero because the cannon is at (0,0)\n";
 
-		interceptHint1 = "This function is in intercept form. In this form, increasing the a variable will make the parabola steeper, however it will not change the horizontal distance the projectile covers.\n";
-		interceptHint2 = "In this form, increasing the b variable will increase the angle of the cannon's barrel, making the projectile go higher and further.\n";
-		interceptHint3 = "The positions that the parabola crosses the x-axis are shown in this form by the numbers in the brackets. One of them is already given to you (0,0)\n";
+		interceptHint1 = "In intercept form, the 'a' variable can be found by inputting the 'x' value of the parabola's vertex (peak)\n";
+		interceptHint2 = "The numerals inside the brackets can be found by inputting the 'x' values of the parabola's 'roots' (where y=0)\n";
+		interceptHint3 = "";
 
 //		winAnnounce.gameObject.SetActive (false);
 //		nextLevel.gameObject.SetActive (false);
@@ -118,11 +118,11 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-		if(Input.GetKeyDown(KeyCode.W)){
-			Debug.Log (targetsRemaining + " targets remaining");
-			Debug.Log (selectedStruct);
-			Debug.Log (fails);
-		};
+//		if(Input.GetKeyDown(KeyCode.W)){
+//			Debug.Log (targetsRemaining + " targets remaining");
+//			Debug.Log (selectedStruct);
+//			Debug.Log (fails);
+//		};
 
 
 			
