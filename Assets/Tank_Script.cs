@@ -119,8 +119,12 @@ public class Tank_Script : MonoBehaviour {
 		// f'(x) = 2ax + b 
 
 		if(Input.GetKeyDown(KeyCode.W)){
-			Win();
+			Debug.Log (targetsRemaining + " targets remaining");
+			Debug.Log (selectedStruct);
+			Debug.Log (fails);
 		};
+
+
 			
 	}
 
@@ -165,7 +169,7 @@ public class Tank_Script : MonoBehaviour {
 				canFire = false;
 
 			} else if (selectedStruct == EquationStruct.None) {
-				Debug.Log ("what are you doin' m8");
+				Debug.Log ("No structure selected");
 
 			}
 		}
@@ -234,11 +238,15 @@ public class Tank_Script : MonoBehaviour {
 			score += 1;
 		}
 
+		fails = 0;
+
 	}
 
 	public void Fail(){
-		foreach (GameObject cannontarget in targets) {
-			cannontarget.gameObject.SetActive (true);
+
+		targets = GameObject.FindGameObjectsWithTag ("target");
+		foreach (GameObject target in targets) {
+			target.gameObject.SetActive (true);
 		}
 
 		targetsRemaining = targets.Length;
@@ -281,8 +289,9 @@ public class Tank_Script : MonoBehaviour {
 //			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
 
 			targets = GameObject.FindGameObjectsWithTag ("target");
-			Debug.Log (targets);
-			targetsRemaining = targets.Length;
+			foreach (GameObject target in targets) {
+				Destroy (target);
+			}
 
 			selectedStruct = EquationStruct.None;
 
@@ -291,6 +300,8 @@ public class Tank_Script : MonoBehaviour {
 			hints.text = "";
 
 			loseScreen.SetActive (true);
+
+			fails = 0;
 		}
 	}
 
@@ -304,6 +315,7 @@ public class Tank_Script : MonoBehaviour {
 		loseScreen.SetActive (false);
 		fireButton.SetActive (false);
 
+		targets = GameObject.FindGameObjectsWithTag ("target");
 		foreach (GameObject target in targets) {
 			Destroy (target);
 		}

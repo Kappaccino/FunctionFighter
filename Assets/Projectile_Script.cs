@@ -27,7 +27,7 @@ public class Projectile_Script : MonoBehaviour {
 		} else if (tankscript.selectedStruct == Tank_Script.EquationStruct.Vertex) {
 			transform.position = new Vector3 (t, (a * Mathf.Pow((t - b),2) + c), 0);
 		} else if (tankscript.selectedStruct == Tank_Script.EquationStruct.None) {
-			Debug.Log ("what are you doin' m8");
+			Debug.Log ("PROJECTILE: No structure selected");
 		}
 	}
 
