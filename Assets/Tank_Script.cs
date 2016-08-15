@@ -65,6 +65,11 @@ public class Tank_Script : MonoBehaviour {
 	public Text gameEnd;
 	public GameObject EndGameScreen;
 	public GameObject[] projectiles;
+
+	public int levelsRemaining;
+
+	public Text progress;
+	public Text scoreDisplay;
 	//y = mx^2 + c
 	// Use this for initialization
 
@@ -73,6 +78,7 @@ public class Tank_Script : MonoBehaviour {
 //			{"testing testing 123", targetsRemaining}
 //		});
 
+		levelsRemaining = 10;
 		GameObject target1 = Instantiate (targetTemplate, new Vector3(5, 7.5f, 0), Quaternion.identity) as GameObject;
 		target1.SetActive (true);
 		GameObject target2 = Instantiate (targetTemplate, new Vector3 (10, 0, 0), Quaternion.identity) as GameObject;
@@ -118,11 +124,16 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-//		if(Input.GetKeyDown(KeyCode.W)){
+		if(Input.GetKeyDown(KeyCode.W)){
+			Win ();
+			Debug.Log (levelsRemaining + "levels remaining");
 //			Debug.Log (targetsRemaining + " targets remaining");
 //			Debug.Log (selectedStruct);
 //			Debug.Log (fails);
-//		};
+		};
+
+		progress.text = completedLevels + "/" + "10";
+		scoreDisplay.text = score + " points";
 
 
 			
@@ -198,6 +209,7 @@ public class Tank_Script : MonoBehaviour {
 //		quit.gameObject.SetActive (true);
 
 		completedLevels++;
+		levelsRemaining--;
 
 		GameObject[] equationUI;
 		equationUI = GameObject.FindGameObjectsWithTag ("Equation");
@@ -278,6 +290,7 @@ public class Tank_Script : MonoBehaviour {
 			}
 
 			completedLevels++;
+			levelsRemaining--;
 
 //			GameObject fireButton;
 //			fireButton = GameObject.FindGameObjectWithTag ("FireButton");
