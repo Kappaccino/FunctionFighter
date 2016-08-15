@@ -256,7 +256,7 @@ public class Tank_Script : MonoBehaviour {
 
 	public void Fail(){
 
-		targets = GameObject.FindGameObjectsWithTag ("target");
+//		targets = GameObject.FindGameObjectsWithTag ("target");
 		foreach (GameObject target in targets) {
 			target.gameObject.SetActive (true);
 		}
@@ -282,40 +282,41 @@ public class Tank_Script : MonoBehaviour {
 			} else if (selectedStruct == EquationStruct.Intercept) {
 				hints.text = interceptHint1 + interceptHint2 + interceptHint3;
 			}
-		} else if (fails > 3) {
-			GameObject[] equationUI;
-			equationUI = GameObject.FindGameObjectsWithTag ("Equation");
-			foreach (GameObject Equation in equationUI) {
-				Equation.SetActive (false);
-			}
-
-			completedLevels++;
-			levelsRemaining--;
-
-//			GameObject fireButton;
-//			fireButton = GameObject.FindGameObjectWithTag ("FireButton");
-//			fireButton.SetActive (false);
-
-			structSelect.SetActive (true);
-
-//			GameObject target1 = Instantiate (targetTemplate, new Vector3(6, 0, 0), Quaternion.identity) as GameObject;
-//			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
-
-			targets = GameObject.FindGameObjectsWithTag ("target");
-			foreach (GameObject target in targets) {
-				Destroy (target);
-			}
-
-			selectedStruct = EquationStruct.None;
-
-			selectionUI.SetActive (false);
-
-			hints.text = "";
-
-			loseScreen.SetActive (true);
-
-			fails = 0;
 		}
+//		} else if (fails > 3) {
+//			GameObject[] equationUI;
+//			equationUI = GameObject.FindGameObjectsWithTag ("Equation");
+//			foreach (GameObject Equation in equationUI) {
+//				Equation.SetActive (false);
+//			}
+//
+//			completedLevels++;
+//			levelsRemaining--;
+//
+////			GameObject fireButton;
+////			fireButton = GameObject.FindGameObjectWithTag ("FireButton");
+////			fireButton.SetActive (false);
+//
+//			structSelect.SetActive (true);
+//
+////			GameObject target1 = Instantiate (targetTemplate, new Vector3(6, 0, 0), Quaternion.identity) as GameObject;
+////			GameObject target2 = Instantiate (targetTemplate, new Vector3 (3, 4.5f, 0), Quaternion.identity) as GameObject;
+//
+//			targets = GameObject.FindGameObjectsWithTag ("target");
+//			foreach (GameObject target in targets) {
+//				Destroy (target);
+//			}
+//
+//			selectedStruct = EquationStruct.None;
+//
+//			selectionUI.SetActive (false);
+//
+//			hints.text = "";
+//
+//			loseScreen.SetActive (true);
+//
+//			fails = 0;
+//		}
 	}
 
 	public void Quit (){
