@@ -70,6 +70,8 @@ public class Tank_Script : MonoBehaviour {
 
 	public Text progress;
 	public Text scoreDisplay;
+	public AudioClip cannonFire;
+	public GameObject camera;
 	//y = mx^2 + c
 	// Use this for initialization
 
@@ -124,13 +126,13 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-		if(Input.GetKeyDown(KeyCode.W)){
-			Win ();
-			Debug.Log (levelsRemaining + "levels remaining");
+//		if(Input.GetKeyDown(KeyCode.W)){
+//			Win ();
+//			Debug.Log (levelsRemaining + "levels remaining");
 //			Debug.Log (targetsRemaining + " targets remaining");
 //			Debug.Log (selectedStruct);
 //			Debug.Log (fails);
-		};
+//		};
 
 		progress.text = completedLevels + "/" + "10";
 		scoreDisplay.text = score + " points";
@@ -183,6 +185,9 @@ public class Tank_Script : MonoBehaviour {
 				Debug.Log ("No structure selected");
 
 			}
+
+			AudioSource audiosource = camera.GetComponent<AudioSource> ();
+			audiosource.PlayOneShot (cannonFire);
 		}
 	}
 
@@ -426,7 +431,7 @@ public class Tank_Script : MonoBehaviour {
 			});
 
 			EndGameScreen.SetActive (true);
-			gameEnd.text = "Great job! You scored: " + score + ". " + "Please take a moment to fill out a questionaire at https://goo.gl/forms/sC82EqT7RAs2jE9C2";
+			gameEnd.text = "Great job! You scored: " + score;
 
 		} else {
 			Debug.Log ("I can't believe you've done this");
