@@ -101,9 +101,9 @@ public class Tank_Script : MonoBehaviour {
 		standardHint2 = "In this form, increasing the b variable will increase the angle of the cannon's barrel, making the projectile go higher and further.\n";
 		standardHint3 = "The correct equation can be found by factoring the 'x' and 'y' values of the three targets to find the 'a', 'b' and 'c' values. 'c' is zero because the cannon is at (0,0)\n";
 
-		interceptHint1 = "In intercept form, the 'a' variable can be found by inputting the 'x' value of the parabola's vertex (peak)\n";
-		interceptHint2 = "The numerals inside the brackets can be found by inputting the 'x' values of the parabola's 'roots' (where y=0)\n";
-		interceptHint3 = "";
+		interceptHint1 = "The numerals inside the brackets can be found by inputting the 'x' values of the parabola's 'roots' (where y=0)\n";
+		interceptHint2 = "To find the 'a' variable, take the other point and factor it into the equation.\n";
+		interceptHint3 = "Simplifying the equation after factoring in the third point will give you the value for 'a'\n";
 
 //		winAnnounce.gameObject.SetActive (false);
 //		nextLevel.gameObject.SetActive (false);
