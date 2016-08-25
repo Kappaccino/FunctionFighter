@@ -126,13 +126,9 @@ public class Tank_Script : MonoBehaviour {
 
 		// f'(x) = 2ax + b 
 
-//		if(Input.GetKeyDown(KeyCode.W)){
-//			Win ();
-//			Debug.Log (levelsRemaining + "levels remaining");
-//			Debug.Log (targetsRemaining + " targets remaining");
-//			Debug.Log (selectedStruct);
-//			Debug.Log (fails);
-//		};
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			SceneManager.LoadScene (1);
+		};
 
 		progress.text = completedLevels + "/" + "10";
 		scoreDisplay.text = score + " points";
